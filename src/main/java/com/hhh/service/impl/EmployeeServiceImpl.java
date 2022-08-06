@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hhh.common.Result;
 import com.hhh.mapper.EmployeeMapper;
-import com.hhh.mybatis.entity.Employee;
+import com.hhh.entity.Employee;
 import com.hhh.service.EmployeeService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -90,9 +90,14 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         employee.setUpdateTime(LocalDateTime.now());
         //  4.获得当前登录用户的ID
         Long empId = (Long) request.getSession().getAttribute("emp");
-        //  5.创建用户
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+
+        /*
+         * 以下字段已使用handler.MyMetaObjectHandler类进行自动填充
+         * employee.setCreateUser(empId);
+         * employee.setUpdateUser(empId);
+         */
+
+        //  5.将用户保存到数据库中
         save(employee);
         return Result.success("新增员工成功");
     }
@@ -128,8 +133,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
      **/
     @Override
     public Result<String> updateEmployeeInfo(HttpServletRequest request, Employee employee) {
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser((Long) request.getSession().getAttribute("emp"));
+        /*
+         * 以下字段已使用handler.MyMetaObjectHandler类进行自动填充
+         * employee.setUpdateTime(LocalDateTime.now());
+         * employee.setUpdateUser((Long) request.getSession().getAttribute("emp"));
+         */
+
         updateById(employee);
         return Result.success("员工信息修改成功");
     }

@@ -4,7 +4,7 @@ package com.hhh.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hhh.common.Result;
-import com.hhh.mybatis.entity.Employee;
+import com.hhh.entity.Employee;
 
 import javax.servlet.http.HttpServletRequest;
 

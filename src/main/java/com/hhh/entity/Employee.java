@@ -1,4 +1,4 @@
-package com.hhh.mybatis.entity;
+package com.hhh.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -32,13 +32,19 @@ public class Employee implements Serializable {
 
     private Integer status;
 
+    /**插入时，填充字段*/
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
+    /**插入和更新时，填充字段*/
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+    /**插入时，填充字段*/
     @TableField(fill = FieldFill.INSERT)
     private Long createUser;
 
+    /**插入和更新时，填充字段*/
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 

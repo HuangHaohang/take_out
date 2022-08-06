@@ -2,7 +2,7 @@ package com.hhh.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhh.common.Result;
-import com.hhh.mybatis.entity.Employee;
+import com.hhh.entity.Employee;
 import com.hhh.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
