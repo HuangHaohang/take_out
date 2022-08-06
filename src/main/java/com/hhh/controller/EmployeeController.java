@@ -1,13 +1,11 @@
 package com.hhh.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hhh.common.Result;
 import com.hhh.mybatis.entity.Employee;
 import com.hhh.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,5 +36,10 @@ public class EmployeeController {
     @PostMapping
     public Result<String> save(HttpServletRequest request, @RequestBody Employee employee) {
         return employeeService.insert(request,employee);
+    }
+
+    @GetMapping("/page")
+    public Result<Page<Employee>> page(int page, int pageSize, String name){
+        return employeeService.queryPage(page, pageSize, name);
     }
 }

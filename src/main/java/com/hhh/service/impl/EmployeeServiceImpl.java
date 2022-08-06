@@ -1,6 +1,7 @@
 package com.hhh.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hhh.common.Result;
 import com.hhh.mapper.EmployeeMapper;
@@ -94,5 +95,27 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         employee.setUpdateUser(empId);
         save(employee);
         return Result.success("新增员工成功");
+    }
+
+    /**
+      * @Author          HuangHH
+      * @Description     //分页查询方法实现
+      * @Date            20:40 2022/8/6
+      * @Param           [page, pageSize, name]
+      * @return          com.hhh.common.Result<com.baomidou.mybatisplus.extension.plugins.pagination.Page>
+      **/
+    @Override
+    public Result<Page<Employee>> queryPage(int page, int pageSize, String name) {
+        //  1.构造分页构造器
+        Page<Employee> pageInfo = new Page<>(page, pageSize);
+        //  2.构造条件构造器
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
+        //  2.1添加过滤条件
+        queryWrapper.like(org.apache.commons.lang.StringUtils.isNotEmpty(name), Employee::getUsername, name);
+        //  2.2添加排序条件
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
+        //  3.执行查询
+        page(pageInfo, queryWrapper);
+        return Result.success(pageInfo);
     }
 }

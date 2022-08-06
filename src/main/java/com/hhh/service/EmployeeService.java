@@ -1,6 +1,7 @@
 package com.hhh.service;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hhh.common.Result;
 import com.hhh.mybatis.entity.Employee;
@@ -41,4 +42,13 @@ public interface EmployeeService extends IService<Employee> {
       * @return          com.hhh.common.Result<java.lang.String>
       **/
     Result<String> insert(HttpServletRequest request,Employee employee);
+
+    /**
+      * @Author          HuangHH
+      * @Description     //分页查询功能接口
+      * @Date            20:40 2022/8/6
+      * @Param           [page, pageSize, name]
+      * @return          com.hhh.common.Result<com.baomidou.mybatisplus.extension.plugins.pagination.Page>
+      **/
+    Result<Page<Employee>> queryPage(int page, int pageSize, String name);
 }
