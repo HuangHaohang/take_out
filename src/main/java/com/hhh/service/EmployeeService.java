@@ -32,4 +32,13 @@ public interface EmployeeService extends IService<Employee> {
       * @return          com.hhh.common.Result<java.lang.String>
       **/
     Result<String> logout(HttpServletRequest request);
+
+    /**
+      * @Author          HuangHH
+      * @Description     //新增员工功能接口
+      * @Date            16:55 2022/8/6
+      * @Param           [employee]
+      * @return          com.hhh.common.Result<java.lang.String>
+      **/
+    Result<String> insert(HttpServletRequest request,Employee employee);
 }

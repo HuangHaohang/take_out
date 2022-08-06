@@ -11,6 +11,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 /**
  * @ClassName EmployeeServiceImpl
@@ -69,5 +70,29 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         request.getSession().removeAttribute("emp");
         //  2.返回退出成功
         return Result.success("退出成功");
+    }
+
+    /**
+      * @Author          HuangHH
+      * @Description     //新增员工功能方法
+      * @Date            16:55 2022/8/6
+      * @Param           [employee]
+      * @return          com.hhh.common.Result<java.lang.String>
+      **/
+    @Override
+    public Result<String> insert(HttpServletRequest request,Employee employee) {
+        //  1.设置初始密码，比进行md5加密处理
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        //  2.设置该员工账号创建时间
+        employee.setCreateTime(LocalDateTime.now());
+        //  3.设置当前这条数据的更新时间
+        employee.setUpdateTime(LocalDateTime.now());
+        //  4.获得当前登录用户的ID
+        Long empId = (Long) request.getSession().getAttribute("emp");
+        //  5.创建用户
+        employee.setCreateUser(empId);
+        employee.setUpdateUser(empId);
+        save(employee);
+        return Result.success("新增员工成功");
     }
 }

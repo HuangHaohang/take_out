@@ -34,4 +34,9 @@ public class EmployeeController {
     public Result<String> logout(HttpServletRequest request){
         return employeeService.logout(request);
     }
+
+    @PostMapping
+    public Result<String> save(HttpServletRequest request, @RequestBody Employee employee) {
+        return employeeService.insert(request,employee);
+    }
 }
