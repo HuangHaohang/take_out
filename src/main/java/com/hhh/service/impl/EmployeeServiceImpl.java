@@ -24,12 +24,12 @@ import java.time.LocalDateTime;
 @Service
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
     /**
-      * @Author          HuangHH
-      * @Description     //员工登录功能实现
-      * @Date            0:21 2022/8/6
-      * @Param           [request, employee]
-      * @return          com.hhh.common.Result<com.hhh.mybatis.entity.Employee>
-      **/
+     * @return com.hhh.common.Result<com.hhh.mybatis.entity.Employee>
+     * @Author HuangHH
+     * @Description //员工登录功能实现
+     * @Date 0:21 2022/8/6
+     * @Param [request, employee]
+     **/
     @Override
     public Result<Employee> login(HttpServletRequest request, Employee employee) {
         //  1.获取前端输入的密码， 并进行md5加密
@@ -54,17 +54,17 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             return Result.error("该员工已被禁用，请联系管理员");
         }
         //  3.若前面都成功，则将查询到的对象返回，并将对象ID存放的Session中
-        request.getSession().setAttribute("emp",emp.getId());
+        request.getSession().setAttribute("emp", emp.getId());
         return Result.success(emp);
     }
 
     /**
-      * @Author          HuangHH
-      * @Description     //员工退出功能实现
-      * @Date            0:35 2022/8/6
-      * @Param           [request]
-      * @return          com.hhh.common.Result<java.lang.String>
-      **/
+     * @return com.hhh.common.Result<java.lang.String>
+     * @Author HuangHH
+     * @Description //员工退出功能实现
+     * @Date 0:35 2022/8/6
+     * @Param [request]
+     **/
     @Override
     public Result<String> logout(HttpServletRequest request) {
         //  1.清楚浏览器保存的session信息
@@ -74,14 +74,14 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
     /**
-      * @Author          HuangHH
-      * @Description     //新增员工功能方法
-      * @Date            16:55 2022/8/6
-      * @Param           [employee]
-      * @return          com.hhh.common.Result<java.lang.String>
-      **/
+     * @return com.hhh.common.Result<java.lang.String>
+     * @Author HuangHH
+     * @Description //新增员工功能方法
+     * @Date 16:55 2022/8/6
+     * @Param [employee]
+     **/
     @Override
-    public Result<String> insert(HttpServletRequest request,Employee employee) {
+    public Result<String> insert(HttpServletRequest request, Employee employee) {
         //  1.设置初始密码，比进行md5加密处理
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
         //  2.设置该员工账号创建时间
@@ -98,12 +98,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
     /**
-      * @Author          HuangHH
-      * @Description     //分页查询方法实现
-      * @Date            20:40 2022/8/6
-      * @Param           [page, pageSize, name]
-      * @return          com.hhh.common.Result<com.baomidou.mybatisplus.extension.plugins.pagination.Page>
-      **/
+     * @return com.hhh.common.Result<com.baomidou.mybatisplus.extension.plugins.pagination.Page>
+     * @Author HuangHH
+     * @Description //分页查询方法实现
+     * @Date 20:40 2022/8/6
+     * @Param [page, pageSize, name]
+     **/
     @Override
     public Result<Page<Employee>> queryPage(int page, int pageSize, String name) {
         //  1.构造分页构造器
@@ -117,5 +117,20 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         //  3.执行查询
         page(pageInfo, queryWrapper);
         return Result.success(pageInfo);
+    }
+
+    /**
+     * @return com.hhh.common.Result<java.lang.String>
+     * @Author HuangHH
+     * @Description //修改员工信息方法实现
+     * @Date 21:01 2022/8/6
+     * @Param [employee]
+     **/
+    @Override
+    public Result<String> updateEmployeeInfo(HttpServletRequest request, Employee employee) {
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser((Long) request.getSession().getAttribute("emp"));
+        updateById(employee);
+        return Result.success("员工信息修改成功");
     }
 }

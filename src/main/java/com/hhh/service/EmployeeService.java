@@ -51,4 +51,13 @@ public interface EmployeeService extends IService<Employee> {
       * @return          com.hhh.common.Result<com.baomidou.mybatisplus.extension.plugins.pagination.Page>
       **/
     Result<Page<Employee>> queryPage(int page, int pageSize, String name);
+
+    /**
+      * @Author          HuangHH
+      * @Description     //修改员工信息方法
+      * @Date            21:00 2022/8/6
+      * @Param           [employee]
+      * @return          com.hhh.common.Result<java.lang.String>
+      **/
+    Result<String> updateEmployeeInfo(HttpServletRequest request, Employee employee);
 }
