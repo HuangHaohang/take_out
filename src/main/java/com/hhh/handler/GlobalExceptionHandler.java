@@ -1,6 +1,7 @@
 package com.hhh.handler;
 
 import com.hhh.common.Result;
+import com.hhh.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -38,5 +39,17 @@ public class GlobalExceptionHandler {
             return Result.error(msg);
         }
         return Result.error("未知错误");
+    }
+
+    /**
+      * @Author          HuangHH
+      * @Description     //处理自定义业务异常
+      * @Date            23:54 2022/8/6
+      * @Param           [ex]
+      * @return          com.hhh.common.Result<java.lang.String>
+      **/
+    @ExceptionHandler(CustomException.class)
+    public Result<String> exceptionHandler(CustomException ex) {
+        return Result.error(ex.getMessage());
     }
 }
